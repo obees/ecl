@@ -334,6 +334,28 @@ float get_bearing_to_next_waypoint(double lat_now, double lon_now, double lat_ne
 	return wrap_pi(atan2f(y, x));
 }
 
+float get_bearing_to_next_waypoint_xy(double x_now, double y_now, double x_next, double y_next)
+{
+	/*
+	double lat_now_rad = math::radians(lat_now);
+	double lon_now_rad = math::radians(lon_now);
+	double lat_next_rad = math::radians(lat_next);
+	double lon_next_rad = math::radians(lon_next);
+
+	double d_lon = lon_next_rad - lon_now_rad;
+	*/
+	/* conscious mix of double and float trig function to maximize speed and efficiency */
+	/*
+	const float y = static_cast<float>(sin(d_lon) * cos(lat_next_rad));
+	const float x = static_cast<float>(cos(lat_now_rad) * sin(lat_next_rad) - sin(lat_now_rad) * cos(lat_next_rad) * cos(d_lon));
+	*/
+
+	const float y = static_cast<float>(y_next - y_now);
+	const float x = static_cast<float>(x_next - x_now);
+
+	return wrap_pi(atan2f(y, x));
+}
+
 void
 get_vector_to_next_waypoint(double lat_now, double lon_now, double lat_next, double lon_next, float *v_n, float *v_e)
 {

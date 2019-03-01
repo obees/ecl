@@ -275,6 +275,8 @@ void waypoint_from_heading_and_distance(double lat_start, double lon_start, floa
  */
 float get_bearing_to_next_waypoint(double lat_now, double lon_now, double lat_next, double lon_next);
 
+float get_bearing_to_next_waypoint_xy(double x_now, double y_now, double x_next, double y_next);
+
 void get_vector_to_next_waypoint(double lat_now, double lon_now, double lat_next, double lon_next, float *v_n, float *v_e);
 
 void get_vector_to_next_waypoint_fast(double lat_now, double lon_now, double lat_next, double lon_next, float *v_n, float *v_e);

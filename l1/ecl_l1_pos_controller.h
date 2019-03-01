@@ -77,6 +77,11 @@ public:
 	 * @return bearing angle (-pi..pi, in NED frame)
 	 */
 	float nav_bearing() { return matrix::wrap_pi(_nav_bearing); }
+	float nav_bearing_dbg() { return _nav_bearing_dbg; }
+	float nav_bearing_vector_curr_position_0_dbg() { return _nav_bearing_vector_curr_position_0_dbg; }
+	float nav_bearing_vector_curr_position_1_dbg() { return _nav_bearing_vector_curr_position_1_dbg; } 
+	float nav_bearing_vector_B_0_dbg() { return _nav_bearing_vector_B_0_dbg; }
+	float nav_bearing_vector_B_1_dbg() { return _nav_bearing_vector_B_1_dbg; }
 
 	/**
 	 * Get lateral acceleration demand.
@@ -148,6 +153,9 @@ public:
 	void navigate_waypoints(const matrix::Vector2f &vector_A, const matrix::Vector2f &vector_B,
 				const matrix::Vector2f &vector_curr_position, const matrix::Vector2f &ground_speed);
 
+	void navigate_waypoints_xy(const matrix::Vector2f &vector_A, const matrix::Vector2f &vector_B,
+				const matrix::Vector2f &vector_curr_position, const matrix::Vector2f &ground_speed);
+	
 	/**
 	 * Navigate on an orbit around a loiter waypoint.
 	 *
@@ -201,6 +209,13 @@ private:
 	float _L1_distance{20.0f};		///< L1 lead distance, defined by period and damping
 	bool _circle_mode{false};		///< flag for loiter mode
 	float _nav_bearing{0.0f};		///< bearing to L1 reference point
+	float _nav_bearing_dbg{0.0f};   ///< bearing to L1 reference point
+	//_target_bearing = get_bearing_to_next_waypoint((double)vector_curr_position(0), (double)vector_curr_position(1), (double)vector_B(0), (double)vector_B(1));
+	float _nav_bearing_vector_curr_position_0_dbg{0.0f};   ///< bearing to L1 reference point
+	float _nav_bearing_vector_curr_position_1_dbg{0.0f};   ///< bearing to L1 reference point
+	float _nav_bearing_vector_B_0_dbg{0.0f}; 
+	float _nav_bearing_vector_B_1_dbg{0.0f}; 
+	
 	float _bearing_error{0.0f};		///< bearing error
 	float _crosstrack_error{0.0f};	///< crosstrack error in meters
 	float _target_bearing{0.0f};		///< the heading setpoint
