@@ -84,20 +84,20 @@ ECL_L1_Pos_Controller::navigate_waypoints_xy(const Vector2f &vector_A, const Vec
 	_L1_distance = _L1_ratio * ground_speed;
 
 	/* calculate vector from A to B */
-	Vector2f vector_AB = get_local_planar_vector(vector_A, vector_B);
+	Vector2f vector_AB = get_local_planar_vector_xy(vector_A, vector_B);
 
 	/*
 	 * check if waypoints are on top of each other. If yes,
 	 * skip A and directly continue to B
 	 */
 	if (vector_AB.length() < 1.0e-6f) {
-		vector_AB = get_local_planar_vector(vector_curr_position, vector_B);
+		vector_AB = get_local_planar_vector_xy(vector_curr_position, vector_B);
 	}
 
 	vector_AB.normalize();
 
 	/* calculate the vector from waypoint A to the aircraft */
-	Vector2f vector_A_to_airplane = get_local_planar_vector(vector_A, vector_curr_position);
+	Vector2f vector_A_to_airplane = get_local_planar_vector_xy(vector_A, vector_curr_position);
 
 	/* calculate crosstrack error (output only) */
 	_crosstrack_error = vector_AB % vector_A_to_airplane;
@@ -111,7 +111,7 @@ ECL_L1_Pos_Controller::navigate_waypoints_xy(const Vector2f &vector_A, const Vec
 	float alongTrackDist = vector_A_to_airplane * vector_AB;
 
 	/* estimate airplane position WRT to B */
-	Vector2f vector_B_to_P_unit = get_local_planar_vector(vector_B, vector_curr_position).normalized();
+	Vector2f vector_B_to_P_unit = get_local_planar_vector_xy(vector_B, vector_curr_position).normalized();
 
 	/* calculate angle of airplane position vector relative to line) */
 
@@ -472,6 +472,15 @@ void ECL_L1_Pos_Controller::navigate_level_flight(float current_heading)
 	/* not circling a waypoint when flying level */
 	_circle_mode = false;
 }
+
+Vector2f ECL_L1_Pos_Controller::get_local_planar_vector_xy(const Vector2f &origin, const Vector2f &target) const
+{
+	/* vector from origin to target */
+	Vector2f out((target(0) - origin(0)), (target(1) - origin(1)));
+
+	return out;
+}
+
 
 Vector2f ECL_L1_Pos_Controller::get_local_planar_vector(const Vector2f &origin, const Vector2f &target) const
 {
